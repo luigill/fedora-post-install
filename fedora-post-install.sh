@@ -1,6 +1,3 @@
-#TODO: gnome extensions
-
-
 #CORES
 VERMELHO='\e[1;91m'
 VERDE='\e[1;92m'
