@@ -31,7 +31,7 @@ install_rpm(){
 
   echo -e "${VERDE}[INFO] - Instalando pacotes RPM${SEM_COR}"
 
-    sudo dnf install curl git wget timeshift alacritty fastfetch eza bat gnome-tweaks gcc neovim tmux axel unzip postgresql-server steam -y
+    sudo dnf install curl git wget timeshift fastfetch eza bat gnome-tweaks gcc neovim tmux axel unzip postgresql-server steam -y
 }
 
 install_codium(){
@@ -59,6 +59,7 @@ install_flatpaks(){
     flatpak install flathub com.github.johnfactotum.Foliate -y
     flatpak install flathub com.rafaelmardojai.Blanket -y
     flatpak install flathub com.protonvpn.www -y
+    flatpak install flathub info.febvre.Komikku -y
 }
 
 add_aliases(){
