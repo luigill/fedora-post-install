@@ -28,21 +28,15 @@ install_rpm(){
 
   echo -e "${VERDE}[INFO] - Instalando pacotes RPM${SEM_COR}"
 
-    sudo dnf install curl git wget timeshift fastfetch eza bat gnome-tweaks gcc neovim tmux axel unzip postgresql-server steam -y
+    sudo dnf install curl git wget timeshift fastfetch eza bat gcc neovim tmux axel unzip postgresql-server steam -y
 }
 
-install_codium(){
-    sudo rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
-    printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h" | sudo tee -a /etc/yum.repos.d/vscodium.repo
-    sudo dnf install codium -y
-}
 
 install_flatpaks(){
 
     echo -e "${VERDE}[INFO] - Instalando pacotes flatpak${SEM_COR}"
 
     flatpak install flathub com.discordapp.Discord -y
-    flatpak install flathub com.brave.Browser -y
     flatpak install flathub com.spotify.Client -y
     flatpak install flathub net.lutris.Lutris -y
     flatpak install flathub com.heroicgameslauncher.hgl -y
@@ -51,12 +45,12 @@ install_flatpaks(){
     flatpak install flathub org.qbittorrent.qBittorrent -y
     flatpak install flathub com.bitwarden.desktop -y
     flatpak install flathub md.obsidian.Obsidian -y
-    flatpak install flathub io.freetubeapp.FreeTube -y
     flatpak install flathub com.stremio.Stremio -y
     flatpak install flathub com.github.johnfactotum.Foliate -y
     flatpak install flathub com.rafaelmardojai.Blanket -y
     flatpak install flathub com.protonvpn.www -y
     flatpak install flathub info.febvre.Komikku -y
+    flatpak install flathub com.vscodium.codium -y
 }
 
 add_aliases(){
@@ -81,8 +75,6 @@ install_mise(){
     ~/.local/bin/mise --version
     mise use --global node@20
     mise use --global python@3.11
-    mise use --global java@openjdk-21
-    mise use --global rust@stable
 }
 
 install_starship(){
@@ -93,17 +85,10 @@ install_starship(){
     echo 'eval "$(starship init bash)"' >> ~/.bashrc
 }
 
-install_papirus(){
-
-    echo -e "${VERDE}[INFO] - Instalando icons papirus${SEM_COR}"
-
-    wget -qO- https://git.io/papirus-icon-theme-install | sh
-}
-
 install_font(){
-    axel -n 20 https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip
-    unzip ./CascadiaCode-2110.01.zip -d ./CascadiaCode-2110.01
-    sudo mv ./CascadiaCode-2110.01/ttf/static/* /usr/share/fonts/
+    axel -n 20 https://github.com/microsoft/cascadia-code/releases/download/v2404.23/CascadiaCode-2404.23.zip
+    unzip ./CascadiaCode-2404.23.zip -d ./CascadiaCode-2404.23
+    sudo mv ./CascadiaCode-2404.23/ttf/static/* /usr/share/fonts/
     fc-cache -f -v
 }
 
@@ -117,12 +102,10 @@ testes_internet
 update_system
 enable_rpmfusion
 install_rpm
-install_codium
 install_flatpaks
 add_aliases
 install_mise
 install_starship
-install_papirus
 install_font
 install_media_codecs
 
