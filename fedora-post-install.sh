@@ -28,7 +28,13 @@ install_rpm(){
 
   echo -e "${VERDE}[INFO] - Instalando pacotes RPM${SEM_COR}"
 
-    sudo dnf install curl git wget timeshift fastfetch eza bat gcc neovim tmux axel unzip postgresql-server steam -y
+    sudo dnf install curl git wget gnome-tweaks timeshift fastfetch eza bat gcc neovim tmux postgresql-server steam -y
+}
+
+install_codium(){
+    sudo rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+    printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h" | sudo tee -a /etc/yum.repos.d/vscodium.repo
+    sudo dnf install codium -y
 }
 
 
@@ -38,6 +44,7 @@ install_flatpaks(){
 
     flatpak install flathub com.discordapp.Discord -y
     flatpak install flathub com.spotify.Client -y
+    flatpak install flathub com.brave.Browser -y
     flatpak install flathub net.lutris.Lutris -y
     flatpak install flathub com.heroicgameslauncher.hgl -y
     flatpak install flathub net.davidotek.pupgui2 -y
@@ -50,7 +57,9 @@ install_flatpaks(){
     flatpak install flathub com.rafaelmardojai.Blanket -y
     flatpak install flathub com.protonvpn.www -y
     flatpak install flathub info.febvre.Komikku -y
-    flatpak install flathub com.vscodium.codium -y
+    flatpak install flathub io.freetubeapp.FreeTube -y
+    flatpak install flathub com.usebottles.bottles
+    
 }
 
 add_aliases(){
@@ -85,11 +94,11 @@ install_starship(){
     echo 'eval "$(starship init bash)"' >> ~/.bashrc
 }
 
-install_font(){
-    axel -n 20 https://github.com/microsoft/cascadia-code/releases/download/v2404.23/CascadiaCode-2404.23.zip
-    unzip ./CascadiaCode-2404.23.zip -d ./CascadiaCode-2404.23
-    sudo mv ./CascadiaCode-2404.23/ttf/static/* /usr/share/fonts/
-    fc-cache -f -v
+install_papirus(){
+
+    echo -e "${VERDE}[INFO] - Instalando icons papirus${SEM_COR}"
+
+    wget -qO- https://git.io/papirus-icon-theme-install | sh
 }
 
 install_media_codecs(){
@@ -98,16 +107,26 @@ install_media_codecs(){
     sudo dnf group upgrade --with-optional Multimedia -y 
 }
 
+install_dropbox(){
+    cd ~/Downloads
+    wget "https://www.dropbox.com/download?dl=packages/fedora/nautilus-dropbox-2024.04.17-1.fc39.x86_64.rpm"
+    sudo dnf install ./nautilus-dropbox-2024.04.17-1.fc39.x86_64.rpm
+
+
+}
+
 testes_internet
 update_system
 enable_rpmfusion
 install_rpm
+install_codium
 install_flatpaks
 add_aliases
 install_mise
 install_starship
-install_font
+install_papirus
 install_media_codecs
+install_dropbox
 
 
 echo -e "${VERDE}[INFO] - Script finalizado, instalação concluída! :)${SEM_COR}"
